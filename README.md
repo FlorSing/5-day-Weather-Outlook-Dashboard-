@@ -12,6 +12,7 @@ A sample of the web page will look like is shown below:
 
 The GitHub repository can be found in:
 
+https://github.com/FlorSing/5-day-Weather-Outlook-Dashboard-
 
 
 The link to the web page deployment is:
