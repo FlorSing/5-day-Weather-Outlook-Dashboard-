@@ -18,6 +18,7 @@ var APIKey = "72380dfb30d88ca9844eebc1d2827077";
 
 //console.log(searchInput);
 
+//determine what city is being searched
 function getSearchTextValue(){
   var searchInput = $("#search-input").val();
   localStorage.setItem('searchText', searchInput);}
@@ -26,9 +27,9 @@ readText = localStorage.getItem('searchText');
 console.log(readText);
 $("#search-input").val(readText);
 
+//use the searched item in api url query
 var cityName = readText;
 var countryCode;
-
 var getGeoLocURL = "http://api.openweathermap.org/geo/1.0/direct?q="+cityName+"&limit=5&appid="+APIKey;
 $.ajax({
   url: getGeoLocURL,
@@ -36,12 +37,15 @@ $.ajax({
 }).then(function(geoLoc) {
   console.log(geoLoc);
   var geoLocArray = geoLoc
-  console.log(geoLocArray[0].lat);
-  localStorage.setItem('lat',geoLocArray[0].lat)
-  console.log(geoLocArray[0].lon);
-  localStorage.setItem('lon',geoLocArray[0].lon)
-  console.log(geoLocArray[0].name);
-  console.log(geoLocArray[0].country);
+  // console.log(geoLocArray[0].lat);
+  localStorage.setItem('lat',geoLocArray[0].lat);
+  // console.log(geoLocArray[0].lon);
+  localStorage.setItem('lon',geoLocArray[0].lon);
+  // console.log(geoLocArray[0].name);
+  localStorage.setItem('city',geoLocArray[0].name);
+  // console.log(geoLocArray[0].country);
+  localStorage.setItem('country',geoLocArray[0].country);
+
   //for (i = 0; i < geoLocArray.length; i++) {
   // var citiesList = [];
   // citiesList.push(geoLocArray[i].country);
@@ -49,10 +53,20 @@ $.ajax({
   // console.log(geoLocArray[i].country)};
   return geoLocArray;
 });
+
+//url query output for use on dashboard = city, temp, wind, humidity
+var city = localStorage.getItem('city');
+var country = localStorage.getItem('country');
 var lat = localStorage.getItem('lat');
 var lon = localStorage.getItem('lon');
-console.log(lat);
-console.log(lon);
+var temp = localStorage.getItem('temp');
+var wind = localStorage.getItem('wind');
+var humidity = localStorage.getItem('humidity');
+// console.log(city);
+// console.log(country);
+// console.log(lat);
+// console.log(lon);
+
 
 var forecastQueryURL = "http://api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&appid="+APIKey;
 $.ajax({
@@ -63,6 +77,7 @@ $.ajax({
   console.log(response);
 
 });
+
 
 // var queryURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + cityName + ",{state code}," + "{countryCode}" + "&limit=5&appid=" + APIKey;
 
