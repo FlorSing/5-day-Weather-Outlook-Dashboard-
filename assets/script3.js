@@ -36,7 +36,7 @@ $.ajax({
   url: getGeoLocURL,
   method: "GET"
 }).then(function(geoLoc) {
-//  console.log(geoLoc);
+  console.log(geoLoc);
   var geoLocArray = geoLoc
   // console.log(geoLocArray[0].lat);
   localStorage.setItem('lat',geoLocArray[0].lat);
@@ -73,3 +73,18 @@ $.ajax({
 
 });
 
+
+var queryCityURL = "https://api.openweathermap.org/data/2.5/weather?q="+cityName+"&appid="+APIKey;
+
+$.ajax({
+  url: queryCityURL,
+  method: "GET"
+}).then(function(response) {
+  console.log(response);
+  localStorage.setItem('lat',geoLocArray[0].lat);
+  localStorage.setItem('lon',geoLocArray[0].lon);
+  localStorage.setItem('city',geoLocArray[0].name);
+  localStorage.setItem('country',geoLocArray[0].country);
+
+
+});

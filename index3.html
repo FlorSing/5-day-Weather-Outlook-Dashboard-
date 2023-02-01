@@ -51,7 +51,22 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
   <!-- jQuery -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="./assets/script.js"> </script>
+  <script>
+  var citiesViewed = []
+  var a = $("<button>").addClass("cities").attr("data-name", citiesViewed).text(citiesViewed);
+  $('#history').append(a);
+  
+  $("#search-button").on("submit", function() {
+
+    var city = $("#search-input").val().trim();
+    console.loghg(city);
+    citiesViewed.push(city);
+    console.log(citiesViewed);
+
+});
+
+
+  </script>
 </body>
 
 </html>
