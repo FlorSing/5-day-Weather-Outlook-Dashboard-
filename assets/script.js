@@ -1,23 +1,38 @@
 
-citiesList = [];
+
 //determine what city is being searched
 function getSearchTextValue(){
   var searchInput = $("#search-input").val();
   localStorage.setItem('searchText', searchInput);}
 
-$("#search-button").on('click', function(){getSearchTextValue()});
+$("#search-button").on('click', function(event){
+  event.preventDefault();
+  var addCity = localStorage.getItem('searchText');
+  cities.push(addCity);
+  
+  getSearchTextValue()});
+
 readText = localStorage.getItem('searchText');
-console.log(readText);
+// console.log(readText);
 $("#search-input").val(readText);
 
 
+cities = ['London', 'Paris', 'Madrid', 'Berlin', 'Edinburgh','Birmingham', 'Manila'];
+$("#history").empty();
+
 function renderButtons() {
-  var a = $("<button>").addClass("cities").text(readText);
-  citiesList.push(a);
-  citiesDiv = $("<div class='citiesList'>");
-  citiesListElement = $('<p>').appendTo(citiesDiv);
-  citiesListSearch = citiesListElement.append(citiesList);
-   $("#history").append(citiesListSearch);};
+  for (var i = 0; i < cities.length; i++) {
+    var a = $("<button>").addClass("cities").attr("data-name",cities[i]).text(cities[i]);
+    citiesDiv = $("<div class='citiesList'>");
+    citiesListElement = $('<p>').appendTo(citiesDiv);
+    citiesListSearch = citiesListElement.append(a);
+    cityHist = $('#history');
+    citiesListSearch.appendTo(cityHist);
+  }
+}
+  // // var a = $("<button>").addClass("cities").text(readText);
+  // // citiesList.push(a);
+  //  $("#history").append(citiesListSearch);};
 
 renderButtons();
 
@@ -55,32 +70,39 @@ $.ajax({
   var fore4Weather = weather.list[31];
   var fore5Weather = weather.list[39];
   
+  // console.log(currWeather.weather[0].icon);
   localStorage.setItem('dateCurrW',currWeather.dt);
+  localStorage.setItem('iconCurrW',currWeather.weather[0].icon);
   localStorage.setItem('tempCurrW',currWeather.main.temp);
   localStorage.setItem('windCurrW',currWeather.wind.speed);
   localStorage.setItem('humidityCurrW',currWeather.main.humidity);
 
   localStorage.setItem('dateFore1W',fore1Weather.dt);
+  localStorage.setItem('iconFore1W',fore1Weather.weather[0].icon);
   localStorage.setItem('tempFore1W',fore1Weather.main.temp);
   localStorage.setItem('windFore1W',fore1Weather.wind.speed);
   localStorage.setItem('humidityFore1W',fore1Weather.main.humidity);
   
   localStorage.setItem('dateFore2W',fore2Weather.dt);
+  localStorage.setItem('iconFore2W',fore2Weather.weather[0].icon);
   localStorage.setItem('tempFore2W',fore2Weather.main.temp);
   localStorage.setItem('windFore2W',fore2Weather.wind.speed);
   localStorage.setItem('humidityFore2W',fore2Weather.main.humidity);
   
   localStorage.setItem('dateFore3W',fore3Weather.dt);
+  localStorage.setItem('iconFore3W',fore3Weather.weather[0].icon);
   localStorage.setItem('tempFore3W',fore3Weather.main.temp);
   localStorage.setItem('windFore3W',fore3Weather.wind.speed);
   localStorage.setItem('humidityFore3W',fore3Weather.main.humidity);
   
   localStorage.setItem('dateFore4W',fore4Weather.dt);
+  localStorage.setItem('iconFore4W',fore4Weather.weather[0].icon);
   localStorage.setItem('tempFore4W',fore4Weather.main.temp);
   localStorage.setItem('windFore4W',fore4Weather.wind.speed);
   localStorage.setItem('humidityFore4W',fore4Weather.main.humidity);
   
   localStorage.setItem('dateFore5W',fore5Weather.dt);
+  localStorage.setItem('iconFore5W',fore5Weather.weather[0].icon);
   localStorage.setItem('tempFore5W',fore5Weather.main.temp);
   localStorage.setItem('windFore5W',fore5Weather.wind.speed);
   localStorage.setItem('humidityFore5W',fore5Weather.main.humidity);
@@ -88,57 +110,81 @@ $.ajax({
 });
 
 var dateCurrW = moment.unix(localStorage.getItem('dateCurrW')).format('DD MMM YYYY');
+var iconCurrW = localStorage.getItem('iconCurrW');
 var tempCurrW = ((localStorage.getItem('tempCurrW'))-273.15).toFixed(0);
 var windCurrW = localStorage.getItem('windCurrW');
 var humidityCurrW = localStorage.getItem('humidityCurrW');
 
 var dateFore1W = moment.unix(localStorage.getItem('dateFore1W')).format('DD MMM YYYY');
+var iconFore1W = localStorage.getItem('iconFore1W');
 var tempFore1W = ('Temp: '+((localStorage.getItem('tempFore1W'))-273.15).toFixed(0))+" °C";
 var windFore1W = ('Wind: '+(localStorage.getItem('windFore1W'))+" kph");
 var humidityFore1W = ('Humidity: '+(localStorage.getItem('humidityFore1W'))+"%");
 
 var dateFore2W = moment.unix(localStorage.getItem('dateFore2W')).format('DD MMM YYYY');
+var iconFore2W = localStorage.getItem('iconFore2W');
 var tempFore2W = ('Temp: '+((localStorage.getItem('tempFore2W'))-273.15).toFixed(0))+" °C";
 var windFore2W = ('Wind: '+(localStorage.getItem('windFore2W'))+" kph");
 var humidityFore2W = ('Humidity: '+(localStorage.getItem('humidityFore2W'))+"%");
 
 var dateFore3W = moment.unix(localStorage.getItem('dateFore3W')).format('DD MMM YYYY');
+var iconFore3W = localStorage.getItem('iconFore3W');
 var tempFore3W = ('Temp: '+((localStorage.getItem('tempFore3W'))-273.15).toFixed(0))+" °C";
 var windFore3W = ('Wind: '+(localStorage.getItem('windFore3W'))+" kph");
 var humidityFore3W = ('Humidity: '+(localStorage.getItem('humidityFore3W'))+"%");
 
 var dateFore4W = moment.unix(localStorage.getItem('dateFore4W')).format('DD MMM YYYY');
+var iconFore4W = localStorage.getItem('iconFore4W');
 var tempFore4W = ('Temp: '+((localStorage.getItem('tempFore4W'))-273.15).toFixed(0))+" °C";
 var windFore4W = ('Wind: '+(localStorage.getItem('windFore4W'))+" kph");
 var humidityFore4W = ('Humidity: '+(localStorage.getItem('humidityFore4W'))+"%");
 
 var dateFore5W = moment.unix(localStorage.getItem('dateFore5W')).format('DD MMM YYYY');
+var iconFore5W = localStorage.getItem('iconFore5W');
 var tempFore5W = ('Temp: '+((localStorage.getItem('tempFore5W'))-273.15).toFixed(0))+" °C";
 var windFore5W = ('Wind: '+(localStorage.getItem('windFore5W'))+" kph");
 var humidityFore5W = ('Humidity: '+(localStorage.getItem('humidityFore5W'))+"%");
 
-
-
+iconURLtop = "http://openweathermap.org/img/wn/"+iconCurrW+"@2x.png";
+iconURLfore1 = "http://openweathermap.org/img/wn/"+iconFore1W+"@2x.png";
+iconURLfore2 = "http://openweathermap.org/img/wn/"+iconFore2W+"@2x.png";
+iconURLfore3 = "http://openweathermap.org/img/wn/"+iconFore3W+"@2x.png";
+iconURLfore4 = "http://openweathermap.org/img/wn/"+iconFore4W+"@2x.png";
+iconURLfore5 = "http://openweathermap.org/img/wn/"+iconFore5W+"@2x.png";
 
 $("<h1>").appendTo($('#today')).text(cityName + " ("+ dateCurrW+")");
+$("<img>").appendTo($('#today')).attr("src", iconURLtop);
 $("<p>").appendTo($('#today')).text('Temp: '+tempCurrW+" °C");
 $("<p>").appendTo($('#today')).text('Wind: '+windCurrW+" kph");
 $("<p>").appendTo($('#today')).text('Humidity: '+humidityCurrW+"%");
 
-foreTbl = $("<table>").appendTo($('#forecast'))
+foreTbl = $("<table>").appendTo($('#forecast'));
 
 foreTblHead = $("<thead>").appendTo(foreTbl);
 foreTblHeader = $("<tr>").appendTo(foreTblHead);
 foreTblHeader.append($("<th>").text('5-Day Foreast:'));
 
 foreTblData = $("<tbody>").appendTo(foreTbl);
-foreTblDataRow1 = $("<tr>").appendTo(foreTblData);
 
+foreTblDataRow1 = $("<tr>").appendTo(foreTblData);
 date1Row = $("<th scope = 'col'>").text(dateFore1W).appendTo(foreTblDataRow1);
 date2Row = $("<th scope = 'col'>").text(dateFore2W).appendTo(foreTblDataRow1);
 date3Row = $("<th scope = 'col'>").text(dateFore3W).appendTo(foreTblDataRow1);
 date4Row = $("<th scope = 'col'>").text(dateFore4W).appendTo(foreTblDataRow1);
 date5Row = $("<th scope = 'col'>").text(dateFore5W).appendTo(foreTblDataRow1);
+
+// foreTblIconRow = $("<tr>").appendTo(foreTblData);
+// icon1Row = $("<img>").attr("src", iconURLfore1).appendTo(foreTblIconRow);
+// icon2Row = $("<img>").attr("src", iconURLfore2).appendTo(foreTblIconRow);
+// icon3Row = $("<img>").attr("src", iconURLfore3).appendTo(foreTblIconRow);
+// icon4Row = $("<img>").attr("src", iconURLfore4).appendTo(foreTblIconRow);
+// icon6Row = $("<img>").attr("src", iconURLfore5).appendTo(foreTblIconRow);
+
+icon1Row = $("<img>").attr("src", iconURLfore1).appendTo(foreTblData);
+icon2Row = $("<img>").attr("src", iconURLfore2).appendTo(foreTblData);
+icon3Row = $("<img>").attr("src", iconURLfore3).appendTo(foreTblData);
+icon4Row = $("<img>").attr("src", iconURLfore4).appendTo(foreTblData);
+icon6Row = $("<img>").attr("src", iconURLfore5).appendTo(foreTblData);
 
 foreTblDataRow2 = $("<tr>").appendTo(foreTblData);
 temp1Row2 = $("<td>").text(tempFore1W).appendTo(foreTblDataRow2);
