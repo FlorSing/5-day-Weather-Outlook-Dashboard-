@@ -5,7 +5,8 @@ function getSearchTextValue(){
   var searchInput = $("#search-input").val();
   localStorage.setItem('searchText', searchInput);}
 
-$("#search-button").on('click', function(){
+$("#search-button").on('click', function(event){
+  event.preventDefault();
   var addCity = localStorage.getItem('searchText');
   cities.push(addCity);
   
@@ -13,10 +14,10 @@ $("#search-button").on('click', function(){
 
 readText = localStorage.getItem('searchText');
 // console.log(readText);
-// $("#search-input").val(readText);
+$("#search-input").val(readText);
 
 
-cities = ['London', 'Paris', 'Madrid', 'Berlin', 'Edinburgh'];
+cities = ['London', 'Paris', 'Madrid', 'Berlin', 'Edinburgh','Birmingham', 'Manila'];
 $("#history").empty();
 
 function renderButtons() {
@@ -34,15 +35,6 @@ function renderButtons() {
   //  $("#history").append(citiesListSearch);};
 
 renderButtons();
-
-
-//event listener for city button element
-
-// $("button").on("click", function() {
-//   var city = $(this).attr("data-city");
-
-// });
-
 
 //use the searched item in api url query
 var cityName = readText;
@@ -71,15 +63,14 @@ $.ajax({
   method: "GET"
 }).then(function(weather) {
   console.log(weather);
-  var currWeather = weather.list[0];  //current day waeather data array
-  var fore1Weather = weather.list[7]; //day one forecast data
-  var fore2Weather = weather.list[15]; // day 2 forecast
-  var fore3Weather = weather.list[23]; //day 3 forecast
-  var fore4Weather = weather.list[31]; //day 4 forecast
-  var fore5Weather = weather.list[39];  //day 5
+  var currWeather = weather.list[0];
+  var fore1Weather = weather.list[7];
+  var fore2Weather = weather.list[15];
+  var fore3Weather = weather.list[23];
+  var fore4Weather = weather.list[31];
+  var fore5Weather = weather.list[39];
   
-  // store data for weather details for each day
-
+  // console.log(currWeather.weather[0].icon);
   localStorage.setItem('dateCurrW',currWeather.dt);
   localStorage.setItem('iconCurrW',currWeather.weather[0].icon);
   localStorage.setItem('tempCurrW',currWeather.main.temp);
@@ -118,8 +109,6 @@ $.ajax({
   
 });
 
-//get each data item and give correct format
-
 var dateCurrW = moment.unix(localStorage.getItem('dateCurrW')).format('DD MMM YYYY');
 var iconCurrW = localStorage.getItem('iconCurrW');
 var tempCurrW = ((localStorage.getItem('tempCurrW'))-273.15).toFixed(0);
@@ -156,8 +145,6 @@ var tempFore5W = ('Temp: '+((localStorage.getItem('tempFore5W'))-273.15).toFixed
 var windFore5W = ('Wind: '+(localStorage.getItem('windFore5W'))+" kph");
 var humidityFore5W = ('Humidity: '+(localStorage.getItem('humidityFore5W'))+"%");
 
-// get url link for icons
-
 iconURLtop = "http://openweathermap.org/img/wn/"+iconCurrW+"@2x.png";
 iconURLfore1 = "http://openweathermap.org/img/wn/"+iconFore1W+"@2x.png";
 iconURLfore2 = "http://openweathermap.org/img/wn/"+iconFore2W+"@2x.png";
@@ -165,16 +152,11 @@ iconURLfore3 = "http://openweathermap.org/img/wn/"+iconFore3W+"@2x.png";
 iconURLfore4 = "http://openweathermap.org/img/wn/"+iconFore4W+"@2x.png";
 iconURLfore5 = "http://openweathermap.org/img/wn/"+iconFore5W+"@2x.png";
 
-// set headline weather data
-
 $("<h1>").appendTo($('#today')).text(cityName + " ("+ dateCurrW+")");
 $("<img>").appendTo($('#today')).attr("src", iconURLtop);
 $("<p>").appendTo($('#today')).text('Temp: '+tempCurrW+" °C");
 $("<p>").appendTo($('#today')).text('Wind: '+windCurrW+" kph");
 $("<p>").appendTo($('#today')).text('Humidity: '+humidityCurrW+"%");
-
-
-//set 5-day forecast data
 
 foreTbl = $("<table>").appendTo($('#forecast'));
 
