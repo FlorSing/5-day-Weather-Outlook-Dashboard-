@@ -1,11 +1,5 @@
-function renderButtons() {
-   var a = $("<button>").addClass("cities").text(readText);
-   citiesDiv = $("<div class='citiesList'>");
-   citiesDiv.append(a);
-    $("#history").prepend(citiesDiv);};
 
-var APIKey = "72380dfb30d88ca9844eebc1d2827077";
-
+citiesList = [];
 //determine what city is being searched
 function getSearchTextValue(){
   var searchInput = $("#search-input").val();
@@ -16,11 +10,20 @@ readText = localStorage.getItem('searchText');
 console.log(readText);
 $("#search-input").val(readText);
 
+
+function renderButtons() {
+  var a = $("<button>").addClass("cities").text(readText);
+  citiesList.push(a);
+  citiesDiv = $("<div class='citiesList'>");
+  citiesListElement = $('<p>').appendTo(citiesDiv);
+  citiesListSearch = citiesListElement.append(citiesList);
+   $("#history").append(citiesListSearch);};
+
 renderButtons();
 
 //use the searched item in api url query
 var cityName = readText;
-
+var APIKey = "72380dfb30d88ca9844eebc1d2827077";
 var countryCode;
 var getGeoLocURL = "http://api.openweathermap.org/geo/1.0/direct?q="+cityName+"&limit=5&appid="+APIKey;
 $.ajax({
