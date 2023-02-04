@@ -17,5 +17,7 @@ https://github.com/FlorSing/5-day-Weather-Outlook-Dashboard-
 
 The link to the web page deployment is:
 
+https://florsing.github.io/5-day-Weather-Outlook-Dashboard-/
+
 
 Thank you.
