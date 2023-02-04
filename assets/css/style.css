@@ -1,0 +1,31 @@
+title{
+    background-color: darkseagreen;
+}
+
+
+body{
+    background-color:lightskyblue;
+  }
+
+
+#today {
+    border: 1px solid black;
+  }
+
+#forecast5day{
+    font-weight: bold;
+
+  }
+
+tbody, td, tr, th {
+    column-width: 100px;
+    border: 1px solid black;
+    /* margin: 20px; */
+  }
+
+table {
+    border-spacing: 15px;
+    line-height: 2.0;
+    /* margin-left: 15px; */
+  }
+  

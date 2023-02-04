@@ -9,30 +9,32 @@ $("#search-button").on('click', function(){
   var addCity = localStorage.getItem('searchText');
   cities.push(addCity);
   
-  getSearchTextValue()});
+getSearchTextValue()});
 
 readText = localStorage.getItem('searchText');
 // console.log(readText);
 // $("#search-input").val(readText);
 
 
-cities = ['London', 'Paris', 'Madrid', 'Berlin', 'Edinburgh'];
+cities = [];
 $("#history").empty();
 
 function renderButtons() {
-  for (var i = 0; i < cities.length; i++) {
-    var a = $("<button>").addClass("cities").attr("data-name",cities[i]).text(cities[i]);
-    citiesDiv = $("<div class='citiesList'>");
-    citiesListElement = $('<p>').appendTo(citiesDiv);
-    citiesListSearch = citiesListElement.append(a);
-    cityHist = $('#history');
-    citiesListSearch.appendTo(cityHist);
-  }
-}
-  // // var a = $("<button>").addClass("cities").text(readText);
-  // // citiesList.push(a);
-  //  $("#history").append(citiesListSearch);};
+  var a = $("<button>").addClass("cities").text(readText);
+  // citiesList.push(a);
+   $("#history").append(a);};
 
+
+  // for (var i = 0; i < cities.length; i++) {
+  //   var a = $("<button>").addClass("cities").attr("data-name",cities[i]).text(cities[i]);
+  //   citiesDiv = $("<div class='citiesList'>");
+  //   citiesListElement = $('<p>').appendTo(citiesDiv);
+  //   citiesListSearch = citiesListElement.append(readText);
+  //   cityHist = $('#history');
+  //   citiesListSearch.appendTo(cityHist);
+  // }
+
+ 
 renderButtons();
 
 
@@ -43,49 +45,66 @@ renderButtons();
 
 // });
 
-
-//use the searched item in api url query
 var cityName = readText;
 var APIKey = "72380dfb30d88ca9844eebc1d2827077";
-var countryCode;
-var getGeoLocURL = "http://api.openweathermap.org/geo/1.0/direct?q="+cityName+"&limit=5&appid="+APIKey;
-$.ajax({
-  url: getGeoLocURL,
-  method: "GET"
-}).then(function(geoLoc) {
-  var geoLocArray = geoLoc
-  localStorage.setItem('lat',geoLocArray[0].lat);
-  localStorage.setItem('lon',geoLocArray[0].lon);
-  localStorage.setItem('city',geoLocArray[0].name);
-  localStorage.setItem('country',geoLocArray[0].country);
+
+//use the searched item in api url query
+function getGeoLocRequest(){
+  var getGeoLocURL = "http://api.openweathermap.org/geo/1.0/direct?q="+cityName+"&limit=5&appid="+APIKey;
+  $.ajax({
+    url: getGeoLocURL,
+    method: "GET"
+  }).then(function(geoLoc) {
+    var geoLocArray = geoLoc
+    localStorage.setItem('lat',geoLocArray[0].lat);
+    localStorage.setItem('lon',geoLocArray[0].lon);
+    localStorage.setItem('city',geoLocArray[0].name);
+    // localStorage.setItem('country',geoLocArray[0].country);
 });
+}
+
+//set geo location
+
+getGeoLocRequest();
+
 var city = localStorage.getItem('city');
-var country = localStorage.getItem('country');
+// var country = localStorage.getItem('country');
 var lat = localStorage.getItem('lat');
 var lon = localStorage.getItem('lon');
 
+
 //url query output for use on dashboard = city, temp, wind, humidity
+
+function getCityWeatherRequest(){
+
+var currentQueryURL = "http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&appid="+APIKey;
+$.ajax({
+  url:currentQueryURL,
+  method: "GET"
+}).then(function(currentWeather) {
+  console.log(currentWeather);
+  localStorage.setItem('dateCurrW',currentWeather.dt);
+  localStorage.setItem('iconCurrW',currentWeather.weather[0].icon);
+  localStorage.setItem('tempCurrW',currentWeather.main.temp);
+  localStorage.setItem('windCurrW',currentWeather.wind.speed);
+  localStorage.setItem('humidityCurrW',currentWeather.main.humidity);
+})
+
 var forecastQueryURL = "http://api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&appid="+APIKey;
 $.ajax({
   url:forecastQueryURL,
   method: "GET"
 }).then(function(weather) {
   console.log(weather);
-  var currWeather = weather.list[0];  //current day waeather data array
-  var fore1Weather = weather.list[7]; //day one forecast data
-  var fore2Weather = weather.list[15]; // day 2 forecast
-  var fore3Weather = weather.list[23]; //day 3 forecast
-  var fore4Weather = weather.list[31]; //day 4 forecast
-  var fore5Weather = weather.list[39];  //day 5
+
   
+  var fore1Weather = weather.list[4]; //day one forecast data
+  var fore2Weather = weather.list[12]; // day 2 forecast
+  var fore3Weather = weather.list[20]; //day 3 forecast
+  var fore4Weather = weather.list[28]; //day 4 forecast
+  var fore5Weather = weather.list[36];  //day 5
+
   // store data for weather details for each day
-
-  localStorage.setItem('dateCurrW',currWeather.dt);
-  localStorage.setItem('iconCurrW',currWeather.weather[0].icon);
-  localStorage.setItem('tempCurrW',currWeather.main.temp);
-  localStorage.setItem('windCurrW',currWeather.wind.speed);
-  localStorage.setItem('humidityCurrW',currWeather.main.humidity);
-
   localStorage.setItem('dateFore1W',fore1Weather.dt);
   localStorage.setItem('iconFore1W',fore1Weather.weather[0].icon);
   localStorage.setItem('tempFore1W',fore1Weather.main.temp);
@@ -116,7 +135,11 @@ $.ajax({
   localStorage.setItem('windFore5W',fore5Weather.wind.speed);
   localStorage.setItem('humidityFore5W',fore5Weather.main.humidity);
   
-});
+})
+};
+
+getCityWeatherRequest();
+
 
 //get each data item and give correct format
 
@@ -167,20 +190,53 @@ iconURLfore5 = "http://openweathermap.org/img/wn/"+iconFore5W+"@2x.png";
 
 // set headline weather data
 
-$("<h1>").appendTo($('#today')).text(cityName + " ("+ dateCurrW+")");
+$("<h2>").appendTo($('#today')).text(cityName + " ("+ dateCurrW+")");
 $("<img>").appendTo($('#today')).attr("src", iconURLtop);
 $("<p>").appendTo($('#today')).text('Temp: '+tempCurrW+" °C");
 $("<p>").appendTo($('#today')).text('Wind: '+windCurrW+" kph");
 $("<p>").appendTo($('#today')).text('Humidity: '+humidityCurrW+"%");
 
-
 //set 5-day forecast data
 
-foreTbl = $("<table>").appendTo($('#forecast'));
+// $('#day1Date').text(dateFore1W);
+// $("<img>").appendTo($('#day1')).attr("src", iconURLfore1);
+// $("<p>").appendTo$('#day1').text('Temp: '+tempFore1W+" °C");
+// $("<p>").appendTo$('#day1').text('Wind: '+windFore1W+" kph");
+// $("<p>").appendTo$('#day1').text('Humidity: '+humidityFore1W+"%");
 
-foreTblHead = $("<thead>").appendTo(foreTbl);
-foreTblHeader = $("<tr>").appendTo(foreTblHead);
-foreTblHeader.append($("<th>").text('5-Day Foreast:'));
+// // $('#day2Date').text(dateFore2W);
+// // $('#day2Icon').append(iconURLfore2);
+// // $("<p>").appendTo$('#day2').text(tempFore2W);
+// // $("<p>").appendTo$('#day2').text(windFore2W);
+// // $("<p>").appendTo$('#day2').text(humidityFore2W);
+
+// // $('#day3Date').text(dateFore3W);
+// // $('#day3Icon').append(iconURLfore3);
+// // $("<p>").appendTo$('#day3').text(tempFore3W);
+// // $("<p>").appendTo$('#day3').text(windFore3W);
+// // $("<p>").appendTo$('#day3').text(humidityFore3W);
+
+// // $('#day4Date').text(dateFore4W);
+// // $('#day4Icon').append(iconURLfore4);
+// // $("<p>").appendTo$('#day4').text(tempFore4W);
+// // $("<p>").appendTo$('#day4').text(windFore4W);
+// // $("<p>").appendTo$('#day4').text(humidityFore4W);
+
+// // $('#day5Date').text(dateFore5W);
+// // $('#day5Icon').append(iconURLfore5);
+// // $("<p>").appendTo$('#day5').text(tempFore5W);
+// // $("<p>").appendTo$('#day5').text(windFore5W);
+// // $("<p>").appendTo$('#day5').text(humidityFore5W);
+
+
+
+
+
+
+
+
+
+foreTbl = $("<table>").appendTo($('#forecast'));
 
 foreTblData = $("<tbody>").appendTo(foreTbl);
 
@@ -191,18 +247,19 @@ date3Row = $("<th scope = 'col'>").text(dateFore3W).appendTo(foreTblDataRow1);
 date4Row = $("<th scope = 'col'>").text(dateFore4W).appendTo(foreTblDataRow1);
 date5Row = $("<th scope = 'col'>").text(dateFore5W).appendTo(foreTblDataRow1);
 
+// // foreTblIconRow = $("<tr>").appendTo(foreTblData);
+// // icon1Row = $("<img>").attr("src", iconURLfore1).appendTo(foreTblIconRow);
+// // icon2Row = $("<img>").attr("src", iconURLfore2).appendTo(foreTblIconRow);
+// // icon3Row = $("<img>").attr("src", iconURLfore3).appendTo(foreTblIconRow);
+// // icon4Row = $("<img>").attr("src", iconURLfore4).appendTo(foreTblIconRow);
+// // icon6Row = $("<img>").attr("src", iconURLfore5).appendTo(foreTblIconRow);
+
 // foreTblIconRow = $("<tr>").appendTo(foreTblData);
 // icon1Row = $("<img>").attr("src", iconURLfore1).appendTo(foreTblIconRow);
 // icon2Row = $("<img>").attr("src", iconURLfore2).appendTo(foreTblIconRow);
 // icon3Row = $("<img>").attr("src", iconURLfore3).appendTo(foreTblIconRow);
 // icon4Row = $("<img>").attr("src", iconURLfore4).appendTo(foreTblIconRow);
 // icon6Row = $("<img>").attr("src", iconURLfore5).appendTo(foreTblIconRow);
-
-icon1Row = $("<img>").attr("src", iconURLfore1).appendTo(foreTblData);
-icon2Row = $("<img>").attr("src", iconURLfore2).appendTo(foreTblData);
-icon3Row = $("<img>").attr("src", iconURLfore3).appendTo(foreTblData);
-icon4Row = $("<img>").attr("src", iconURLfore4).appendTo(foreTblData);
-icon6Row = $("<img>").attr("src", iconURLfore5).appendTo(foreTblData);
 
 foreTblDataRow2 = $("<tr>").appendTo(foreTblData);
 temp1Row2 = $("<td>").text(tempFore1W).appendTo(foreTblDataRow2);
