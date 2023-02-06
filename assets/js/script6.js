@@ -1,89 +1,3 @@
-// var cities = [];
-
-// init();
-
-// function renderCities() {
-//   cities.innerHTML = "";
-
-//   // Render a new button for each city
-//   for (var i = 0; i < cities.length; i++) {
-//     var city = cities[i];
-
-//     var a = $('<button>').text(city);
-//     cities.append(a);
-//   }
-// }
-
-// function init() {
-//   // Get stored cities from localStorage
-//   // Parsing the JSON string to an object
-//   var storedCities = JSON.parse(localStorage.getItem("cities"));
-//     cities = storedCities;
-//   }
-
-//   // Render todos to the DOM
-//   renderCities();
-// }
-
-// function storeCities() {
-//   // Stringify and set "cities" key in localStorage to cities array
-//   localStorage.setItem("cities", JSON.stringify(cities));
-// }
-
-// // When form is submitted...
-// citySearch.addEventListener("submit", function(event) {
-//   event.preventDefault();
-
-//   var searchText = searchInput.value.trim();
-
-//   // Add new searchText to cities array, clear the input
-//   cities.push(searchText);
-//   searchInput.value = "";
-
-//   // Store updated todos in localStorage, re-render the list
-//   storeTodos();
-//   renderTodos();
-// });
-
-// // When a element inside of the citiesList is clicked...
-// citieList.addEventListener("click", function(event) {
-//   var element = event.target;
-
-//     // Store updated todos in localStorage, re-render the list
-//     storeTodos();
-//     renderTodos();
-//   }
-// });
-
-
-
-//
-
-cities=[];
-//determine what city is being searched
-function getSearchTextValue(){
-  var searchInput = $("#search-input").val();
-  localStorage.setItem('searchText', searchInput);
-}
-
-$("#search-button").on('click', function(){
-  var addCity = localStorage.getItem('searchText');
-  cities.push(addCity);
-  console.log(cities);
-  getSearchTextValue()}
-);
-
-readText = localStorage.getItem('searchText');
-
-cities = [];
-$("#history").empty();
-
-function renderButtons() {
-  var a = $("<button>").addClass("cities").text(readText);
-  // citiesList.push(a);
-   $("#history").append(a);};
-
-renderButtons();
 
 
 var cityName = readText;
@@ -288,18 +202,19 @@ date3Row = $("<th scope = 'col'>").text(dateFore3W).appendTo(foreTblDataRow1);
 date4Row = $("<th scope = 'col'>").text(dateFore4W).appendTo(foreTblDataRow1);
 date5Row = $("<th scope = 'col'>").text(dateFore5W).appendTo(foreTblDataRow1);
 
+// // foreTblIconRow = $("<tr>").appendTo(foreTblData);
+// // icon1Row = $("<img>").attr("src", iconURLfore1).appendTo(foreTblIconRow);
+// // icon2Row = $("<img>").attr("src", iconURLfore2).appendTo(foreTblIconRow);
+// // icon3Row = $("<img>").attr("src", iconURLfore3).appendTo(foreTblIconRow);
+// // icon4Row = $("<img>").attr("src", iconURLfore4).appendTo(foreTblIconRow);
+// // icon6Row = $("<img>").attr("src", iconURLfore5).appendTo(foreTblIconRow);
 
-foreTblIconRow = $("<tr>").appendTo(foreTblData);
-icon1Row = $("<td>").appendTo(foreTblIconRow);
-$("<img>").attr("src", iconURLfore1).appendTo(icon1Row);
-icon2Row = $("<td>").appendTo(foreTblIconRow);
-$("<img>").attr("src", iconURLfore2).appendTo(icon2Row);
-icon3Row = $("<td>").appendTo(foreTblIconRow);
-$("<img>").attr("src", iconURLfore3).appendTo(icon3Row);
-icon4Row = $("<td>").appendTo(foreTblIconRow);
-$("<img>").attr("src", iconURLfore4).appendTo(icon4Row);
-icon5Row = $("<td>").appendTo(foreTblIconRow);
-$("<img>").attr("src", iconURLfore5).appendTo(icon5Row);
+// foreTblIconRow = $("<tr>").appendTo(foreTblData);
+// icon1Row = $("<img>").attr("src", iconURLfore1).appendTo(foreTblIconRow);
+// icon2Row = $("<img>").attr("src", iconURLfore2).appendTo(foreTblIconRow);
+// icon3Row = $("<img>").attr("src", iconURLfore3).appendTo(foreTblIconRow);
+// icon4Row = $("<img>").attr("src", iconURLfore4).appendTo(foreTblIconRow);
+// icon6Row = $("<img>").attr("src", iconURLfore5).appendTo(foreTblIconRow);
 
 foreTblDataRow2 = $("<tr>").appendTo(foreTblData);
 temp1Row2 = $("<td>").text(tempFore1W).appendTo(foreTblDataRow2);

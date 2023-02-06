@@ -64,28 +64,29 @@ cities=[];
 function getSearchTextValue(){
   var searchInput = $("#search-input").val();
   localStorage.setItem('searchText', searchInput);
-}
+};
+getSearchTextValue();
+  
+// $("#search-button").on('click', function(){
 
-$("#search-button").on('click', function(){
-  var addCity = localStorage.getItem('searchText');
-  cities.push(addCity);
-  console.log(cities);
-  getSearchTextValue()}
-);
+// var addCity = localStorage.getItem('searchText');
+//     cities.push(addCity);
+//     localStorage.setItem("cities", JSON.stringify(cities));
+// readText = localStorage.getItem('searchText');
+// storedCities = JSON.parse(localStorage.getItem("cities"));
+// // $("#history").append(storedCities);
 
-readText = localStorage.getItem('searchText');
-
-cities = [];
-$("#history").empty();
-
-function renderButtons() {
-  var a = $("<button>").addClass("cities").text(readText);
-  // citiesList.push(a);
-   $("#history").append(a);};
-
-renderButtons();
+// function renderButtons() {
+//   var a = $("<button>").addClass("cities");
 
 
+//   $("#history").append(a);
+//   console.log(storedCities);
+// };
+
+//renderButtons();
+
+var readText = localStorage.getItem('searchText');
 var cityName = readText;
 var APIKey = "72380dfb30d88ca9844eebc1d2827077";
 
@@ -288,18 +289,19 @@ date3Row = $("<th scope = 'col'>").text(dateFore3W).appendTo(foreTblDataRow1);
 date4Row = $("<th scope = 'col'>").text(dateFore4W).appendTo(foreTblDataRow1);
 date5Row = $("<th scope = 'col'>").text(dateFore5W).appendTo(foreTblDataRow1);
 
+// // foreTblIconRow = $("<tr>").appendTo(foreTblData);
+// // icon1Row = $("<img>").attr("src", iconURLfore1).appendTo(foreTblIconRow);
+// // icon2Row = $("<img>").attr("src", iconURLfore2).appendTo(foreTblIconRow);
+// // icon3Row = $("<img>").attr("src", iconURLfore3).appendTo(foreTblIconRow);
+// // icon4Row = $("<img>").attr("src", iconURLfore4).appendTo(foreTblIconRow);
+// // icon6Row = $("<img>").attr("src", iconURLfore5).appendTo(foreTblIconRow);
 
-foreTblIconRow = $("<tr>").appendTo(foreTblData);
-icon1Row = $("<td>").appendTo(foreTblIconRow);
-$("<img>").attr("src", iconURLfore1).appendTo(icon1Row);
-icon2Row = $("<td>").appendTo(foreTblIconRow);
-$("<img>").attr("src", iconURLfore2).appendTo(icon2Row);
-icon3Row = $("<td>").appendTo(foreTblIconRow);
-$("<img>").attr("src", iconURLfore3).appendTo(icon3Row);
-icon4Row = $("<td>").appendTo(foreTblIconRow);
-$("<img>").attr("src", iconURLfore4).appendTo(icon4Row);
-icon5Row = $("<td>").appendTo(foreTblIconRow);
-$("<img>").attr("src", iconURLfore5).appendTo(icon5Row);
+// foreTblIconRow = $("<tr>").appendTo(foreTblData);
+// icon1Row = $("<img>").attr("src", iconURLfore1).appendTo(foreTblIconRow);
+// icon2Row = $("<img>").attr("src", iconURLfore2).appendTo(foreTblIconRow);
+// icon3Row = $("<img>").attr("src", iconURLfore3).appendTo(foreTblIconRow);
+// icon4Row = $("<img>").attr("src", iconURLfore4).appendTo(foreTblIconRow);
+// icon6Row = $("<img>").attr("src", iconURLfore5).appendTo(foreTblIconRow);
 
 foreTblDataRow2 = $("<tr>").appendTo(foreTblData);
 temp1Row2 = $("<td>").text(tempFore1W).appendTo(foreTblDataRow2);
