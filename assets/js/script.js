@@ -1,15 +1,77 @@
+// var cities = [];
+
+// init();
+
+// function renderCities() {
+//   cities.innerHTML = "";
+
+//   // Render a new button for each city
+//   for (var i = 0; i < cities.length; i++) {
+//     var city = cities[i];
+
+//     var a = $('<button>').text(city);
+//     cities.append(a);
+//   }
+// }
+
+// function init() {
+//   // Get stored cities from localStorage
+//   // Parsing the JSON string to an object
+//   var storedCities = JSON.parse(localStorage.getItem("cities"));
+//     cities = storedCities;
+//   }
+
+//   // Render todos to the DOM
+//   renderCities();
+// }
+
+// function storeCities() {
+//   // Stringify and set "cities" key in localStorage to cities array
+//   localStorage.setItem("cities", JSON.stringify(cities));
+// }
+
+// // When form is submitted...
+// citySearch.addEventListener("submit", function(event) {
+//   event.preventDefault();
+
+//   var searchText = searchInput.value.trim();
+
+//   // Add new searchText to cities array, clear the input
+//   cities.push(searchText);
+//   searchInput.value = "";
+
+//   // Store updated todos in localStorage, re-render the list
+//   storeTodos();
+//   renderTodos();
+// });
+
+// // When a element inside of the citiesList is clicked...
+// citieList.addEventListener("click", function(event) {
+//   var element = event.target;
+
+//     // Store updated todos in localStorage, re-render the list
+//     storeTodos();
+//     renderTodos();
+//   }
+// });
 
 
+
+
+
+cities=[];
 //determine what city is being searched
 function getSearchTextValue(){
   var searchInput = $("#search-input").val();
-  localStorage.setItem('searchText', searchInput);}
+  localStorage.setItem('searchText', searchInput);
+}
 
 $("#search-button").on('click', function(){
   var addCity = localStorage.getItem('searchText');
   cities.push(addCity);
-  
-getSearchTextValue()});
+  console.log(cities);
+  getSearchTextValue()}
+);
 
 readText = localStorage.getItem('searchText');
 // console.log(readText);
@@ -23,6 +85,7 @@ function renderButtons() {
   var a = $("<button>").addClass("cities").text(readText);
   // citiesList.push(a);
    $("#history").append(a);};
+
 
 
   // for (var i = 0; i < cities.length; i++) {
@@ -50,7 +113,7 @@ var APIKey = "72380dfb30d88ca9844eebc1d2827077";
 
 //use the searched item in api url query
 function getGeoLocRequest(){
-  var getGeoLocURL = "http://api.openweathermap.org/geo/1.0/direct?q="+cityName+"&limit=5&appid="+APIKey;
+  var getGeoLocURL = "https://api.openweathermap.org/geo/1.0/direct?q="+cityName+"&limit=5&appid="+APIKey;
   $.ajax({
     url: getGeoLocURL,
     method: "GET"
@@ -77,7 +140,7 @@ var lon = localStorage.getItem('lon');
 
 function getCityWeatherRequest(){
 
-var currentQueryURL = "http://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&appid="+APIKey;
+var currentQueryURL = "https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&appid="+APIKey;
 $.ajax({
   url:currentQueryURL,
   method: "GET"
@@ -90,7 +153,7 @@ $.ajax({
   localStorage.setItem('humidityCurrW',currentWeather.main.humidity);
 })
 
-var forecastQueryURL = "http://api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&appid="+APIKey;
+var forecastQueryURL = "https://api.openweathermap.org/data/2.5/forecast?lat="+lat+"&lon="+lon+"&appid="+APIKey;
 $.ajax({
   url:forecastQueryURL,
   method: "GET"
@@ -236,7 +299,7 @@ $("<p>").appendTo($('#today')).text('Humidity: '+humidityCurrW+"%");
 
 
 
-foreTbl = $("<table>").appendTo($('#forecast'));
+foreTbl = $("<table class = 'table'>").appendTo($('#forecast'));
 
 foreTblData = $("<tbody>").appendTo(foreTbl);
 

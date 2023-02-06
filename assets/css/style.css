@@ -21,11 +21,13 @@ tbody, td, tr, th {
     column-width: 100px;
     border: 1px solid black;
     /* margin: 20px; */
+
   }
 
 table {
     border-spacing: 15px;
-    line-height: 2.0;
+    /* line-height: 2.0; */
     /* margin-left: 15px; */
+    column-width: 300px;
   }
   
