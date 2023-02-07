@@ -75,12 +75,13 @@ $("#search-button").on('click', function(){
 
 readText = localStorage.getItem('searchText');
 
-cities = [];
-$("#history").empty();
+// cities = [];
+// $("#history").empty();
 
 function renderButtons() {
   var a = $("<button>").addClass("cities").text(readText);
-  // citiesList.push(a);
+   cities.push(a);
+   console.log(cities);
    $("#history").append(a);};
 
 renderButtons();
