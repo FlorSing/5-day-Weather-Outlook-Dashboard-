@@ -8,6 +8,7 @@ The user can search for and choose a specific place whether for travel or other 
 A sample of the web page will look like is shown below:
 
 ![10-server-side-apis-challenge-demo](https://user-images.githubusercontent.com/118206899/216031894-3cbacee0-9a3d-446f-a761-43327770c684.png)
+![Screenshot 2023-03-09 211411](https://user-images.githubusercontent.com/118206899/225059403-087f4be1-be53-41d3-b942-d9bd35c5c0ed.png)
 
 
 The GitHub repository can be found in:
